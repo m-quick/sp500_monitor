@@ -1,8 +1,6 @@
 name: run main.py
 
-on:
-  schedule:
-    - cron: '0 22 * * *'
+on: [push]
 
 jobs:
   run-python-script:
@@ -34,6 +32,6 @@ jobs:
         git commit -m "Update files via GitHub Actions"
     
     - name: Push Changes
-      run: git push origin master  # Push changes to the 'origin/master' branch.
+      run: git push origin main  # Push changes to the 'origin/master' branch.
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # This token is automatically provided by GitHub Actions and grants access to push changes.
