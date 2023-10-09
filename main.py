@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 
 def get_returns(
-    from_date: datetime.date = datetime.date(2023, 1, 1),
+    from_date: datetime.date = datetime.date(2022, 12, 1),
     to_date: datetime.date = datetime.date.today(),
 ) -> None:
     index_price = web.DataReader(["sp500"], "fred", from_date, to_date)
