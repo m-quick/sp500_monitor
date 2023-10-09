@@ -5,35 +5,35 @@ on:
     - cron: '0 22 * * *'
 
 jobs:
-  build:
+  run-python-script:
+    name: Run Python Script and Push Changes
     runs-on: ubuntu-latest
+
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v2  # This step checks out your repository code.
 
-      - name: checkout repo content
-        uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Set up Python
+      uses: actions/setup-python@v2  # This step sets up Python.
+      with:
+        python-version: '3.9 ' # Replace with your desired Python version.
 
-      - name: setup python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.9'
-          
-      - name: install python packages
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          
-      - name: execute py script
-        run: python main.py
-          
-      - name: check for changes
-        run: git status
-      - name: stage changed files
-        run: git add .
-      - name: commit changed files
-        run: git commit -m "Auto update"
-      - name: fetch from master
-        run: git fetch origin master
-      - name: push code to master
-        run: git push origin HEAD:master
+    - name: install python packages
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run Python Script
+      run: python main.py  # Replace with the actual command to run your main.py file.
+    
+    - name: Add and Commit Changes
+      run: |
+        git add .
+        git config --global user.email "actions@example.com"
+        git config --global user.name "GitHub Actions"
+        git commit -m "Update files via GitHub Actions"
+    
+    - name: Push Changes
+      run: git push origin master  # Push changes to the 'origin/master' branch.
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # This token is automatically provided by GitHub Actions and grants access to push changes.
